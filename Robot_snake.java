@@ -91,7 +91,7 @@ public class Robot_snake {
             	else {snake_y[0]=snake_y[0]+1;body_move(env);return 1;}
         else if(act==4)//eat current food
         	if(sensor(4,env)!=FOOD) return 0;
-        	else {snake_len++;score++;env[food_x][food_y]=0;initfood(env);System.out.print("*********************************************************"); return 1;}
+        	else {snake_len++;score++;env[food_x][food_y]=0;initfood(env);return 1;}
         else
         	return -1;
             
@@ -130,12 +130,11 @@ public class Robot_snake {
 		int temp = r.nextInt(100);
 		int choice;
 		if (temp<epsilon*100 || helper_array_all_0(Qtable.get(state))) 
-			{choice = r.nextInt(5);
-			if(choice==-1) System.out.print("xiiiiiiiii");}
+			choice = r.nextInt(5);
 		else {
 			double max=Collections.max(Qtable.get(state));
 			choice=Qtable.get(state).indexOf(max);
-			if(choice==-1) System.out.print("eneneneneneenen");
+			
 		}
 		return choice;
 	}
