@@ -78,30 +78,20 @@ public class Robot_snake {
 	}
 	public int action(int act,int[][] env) {//tested
         if(act == 0) //move to East
-        	if(sensor(0,env)==WALL) 
-        		{game_restart(env);return 0;}
-            else 
-            {snake_x[0]=snake_x[0]+1;body_move(env);return 1;}
+        	if(sensor(0,env)==WALL) {game_restart(env);return 0;}
+            	else {snake_x[0]=snake_x[0]+1;body_move(env);return 1;}
         else if(act == 1)//move to West
-        	if(sensor(1,env)==WALL) 
-        		{game_restart(env);return 0;}
-            else 
-            {snake_x[0]=snake_x[0]-1;body_move(env);return 1;}
+        	if(sensor(1,env)==WALL) {game_restart(env);return 0;}
+            	else {snake_x[0]=snake_x[0]-1;body_move(env);return 1;}
         else if(act == 2)//move to South
-        	if(sensor(2,env)==WALL) 
-        		{game_restart(env);return 0;}
-            else 
-            {snake_y[0]=snake_y[0]-1;body_move(env);return 1;}
+        	if(sensor(2,env)==WALL) {game_restart(env);return 0;}
+            	else {snake_y[0]=snake_y[0]-1;body_move(env);return 1;}
         else if(act == 3)//move to North
-        	if(sensor(3,env)==WALL) 
-        		{game_restart(env);return 0;}
-            else 
-            {snake_y[0]=snake_y[0]+1;body_move(env);return 1;}
+        	if(sensor(3,env)==WALL) {game_restart(env);return 0;}
+            	else {snake_y[0]=snake_y[0]+1;body_move(env);return 1;}
         else if(act==4)//eat current food
-        	if(sensor(4,env)!=FOOD) 
-        		return 0;
-        	else 
-        		{snake_len++;score++;env[food_x][food_y]=0;initfood(env);System.out.print("*********************************************************"); return 1;}
+        	if(sensor(4,env)!=FOOD) return 0;
+        	else {snake_len++;score++;env[food_x][food_y]=0;initfood(env);System.out.print("*********************************************************"); return 1;}
         else
         	return -1;
             
