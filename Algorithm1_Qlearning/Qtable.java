@@ -30,15 +30,15 @@ public class Qtable {
 		Robot_snake robot = new Robot_snake(world);
 		for(int time=0; time<episodes;time++) {
 				ArrayList<Integer> current_state=robot.state(world);
-				boolean contains = Qtable.containsKey(current_state);
+				boolean contains = Qtable.containsKey(current_state);// if the Qtable contain the current state, if not, add the pair(current_state)- value[0,0,0,0,0]
 				if(!contains) {
 					ArrayList<Double> zero_list = new ArrayList<Double>() {{add((double) 0);add((double) 0);add((double) 0);add((double) 0);add((double) 0);}};
 					Qtable.put(current_state,zero_list);
 				}
-				int act=robot.choose_action(current_state, Qtable,epsilon_Greedy);
-				int awards=robot.award(act,world);
+				int act=robot.choose_action(current_state, Qtable,epsilon_Greedy);//choose the max value of current state in Qtable as act
+				int awards=robot.award(act,world);//get awards for current act
 				ArrayList<Integer> next_state=robot.state(world);
-				contains = Qtable.containsKey(next_state);
+				contains = Qtable.containsKey(next_state);//if the Qtable contain the next state, if not add to the qtable
 				if(!contains) {
 					ArrayList<Double> zero_list = new ArrayList<Double>() {{add((double) 0);add((double) 0);add((double) 0);add((double) 0);add((double) 0);}};
 					Qtable.put(next_state,zero_list);
@@ -54,13 +54,13 @@ public class Qtable {
 				Qtable.put(current_state,Qtable_current_state_actions);
 //*******************************************************************************************************	
 			}
-		for (ArrayList<Integer> i : Qtable.keySet()) 
-      System.out.println("key: " + i + " value: " + Qtable.get(i));
-		for (int i=0;i<12;i++) {
+		for (ArrayList<Integer> i : Qtable.keySet()) //print qtable
+      			System.out.println("key: " + i + " value: " + Qtable.get(i));
+		for (int i=0;i<12;i++) {	//print maze
 			System.out.print("\n");
 			for(int j=0;j<12;j++)
-		System.out.print(world[i][j]);}
-		System.out.println("\nthe highest score is"+robot.history_score);
+				System.out.print(world[i][j]);}
+		System.out.println("\nthe highest score is"+robot.history_score);// print highest history score
 	
 	}
 }
