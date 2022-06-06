@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Qtable {
-	static int episodes = 500000;
+	static int episodes = 500000;// since the snake will resets itself after death, so my 1 epsode here doesn't mean one game, but one move of the snake.
 	static double learning_rate = 0.2;
 	static double gamma = 0.9;
 	static double epsilon_Greedy = 0.2;
