@@ -102,27 +102,25 @@ public class Robot_snake {
         	if(sensor(0,env)==WALL) 
         		{game_restart(env);return 0;}
             else 
-            {previous_snake_head_x=snake_x[0];snake_x[0]=snake_x[0]+1;body_move(env);return 1;}
+            {previous_snake_head_x=snake_x[0];body_move(env);snake_x[0]=snake_x[0]+1;return 1;}
         else if(act == 1)//move to West
         	if(sensor(1,env)==WALL) 
         		{game_restart(env);return 0;}
             else 
-            {previous_snake_head_x=snake_x[0]; snake_x[0]=snake_x[0]-1;body_move(env);return 1;}
+            {previous_snake_head_x=snake_x[0];body_move(env); snake_x[0]=snake_x[0]-1;return 1;}
         else if(act == 2)//move to South
         	if(sensor(2,env)==WALL) 
         		{game_restart(env);return 0;}
             else 
-            {previous_snake_head_y=snake_y[0]; snake_y[0]=snake_y[0]-1;body_move(env);return 1;}
+            {previous_snake_head_y=snake_y[0]; body_move(env);snake_y[0]=snake_y[0]-1;return 1;}
         else if(act == 3)//move to North
         	if(sensor(3,env)==WALL) 
         		{game_restart(env);return 0;}
             else 
-            {previous_snake_head_y=snake_y[0]; snake_y[0]=snake_y[0]+1;body_move(env);return 1;}
-        else if(act==4)//eat current food
-        	if(sensor(4,env)!=FOOD) 
-        		return 0;
-        	else 
-        		{snake_len++;score++;env[food_x][food_y]=0;initfood(env);return 1;}
+            {previous_snake_head_y=snake_y[0]; body_move(env);snake_y[0]=snake_y[0]+1;return 1;}
+        else if(act==4){//eat current food
+        	if(sensor(4,env)!=FOOD) return 0;
+        	else {snake_len++;score++;env[food_x][food_y]=0;initfood(env);return 1;}}
         else
         	return -1;
             
@@ -130,33 +128,33 @@ public class Robot_snake {
 	
 	public int award(int act, int[][] env) {//no need test
         if(act==0)
-            if (action(act,env)==0) return -5;//died
+            if (action(act,env)==0) return -100;//died
             else {//move Easy successfully
             	if(manhattan())return 5;
             	else return-5;
             }
         
         if(act==1)
-            if (action(act,env)==0) return -5;
+            if (action(act,env)==0) return -100;
             else {//move West successfully
             	if(manhattan())return 5;
             	else return-5;
             }
         if(act==2)
-            if (action(act,env)==0) return -5;
+            if (action(act,env)==0) return -100;
             else {//move South successfully
             	if(manhattan())return 5;
             	else return-5;
             }
         if(act==3)
-            if (action(act,env)==0) return -5;
+            if (action(act,env)==0) return -100;
             else {//move North successfully
             	if(manhattan())return 5;
             	else return-5;
             }
         if(act==4)
         	if (action(act,env)==0) return -5;//eat at empty grid
-            else return 5;//eat successfully
+            else return 50;//eat successfully
         return 0;
        
 	}
