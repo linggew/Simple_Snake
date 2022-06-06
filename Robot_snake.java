@@ -15,7 +15,11 @@ public class Robot_snake {
 	int food_x;
 	int food_y;
 	int score;
+	int history_score=0;
+	int previous_snake_head_x;
+	int previous_snake_head_y;
 	Random r = new Random();
+	
 	
 //snake and food initializer 	
 	public void initsnake(int[][] env) {//tested
@@ -29,7 +33,17 @@ public class Robot_snake {
 		env[snake_x[1]][snake_y[1]]=WALL;//body part will be regards as wall
 		env[snake_x[2]][snake_y[2]]=WALL;
 		score=0;
+		previous_snake_head_x=snake_x[0];
+		previous_snake_head_y=snake_y[0];
 	}
+	public boolean manhattan() {
+		int distance_current=Math.abs(snake_x[0]-food_x)+Math.abs(snake_y[0]-food_y);
+		int distance_previous=Math.abs(previous_snake_head_x-food_x)+Math.abs(previous_snake_head_y-food_y);
+		if(distance_current<distance_previous) return true;
+		else return false;
+	}
+	
+	
 	public void initfood(int[][] env) { //tested
 		while (true) {
 		food_x=r.nextInt(1,11);//random generate food on maze
@@ -39,11 +53,16 @@ public class Robot_snake {
 			break;}}}
 	
 	public void game_restart(int[][] env) {// restart game 
+		
 		for(int i=0;i<snake_len;i++) {//remove the previous body in the maze
+			if((snake_x[i]==0)&(snake_x[i]==0))
+				System.out.println("body just get longger");
+			else
 			env[snake_x[i]][snake_y[i]]=0;
 		}
 		env[food_x][food_y]=0;//remove the previous food in the maze
 		System.out.println("snake died, and score is:"+score);
+		if (score>history_score) history_score=score;
 		initsnake(env);
 		initfood(env);
 		
@@ -74,24 +93,36 @@ public class Robot_snake {
         else if (sense==2) return env[snake_x[0]][snake_y[0]-1];//South
         else if (sense==3) return env[snake_x[0]][snake_y[0]+1];//North
         else if (sense==4) return env[snake_x[0]][snake_y[0]];//current
+        else if (sense==5) {if(food_x>snake_x[0])return 1;else if(food_x<snake_x[0]) return 2; else return 0;}
+        else if (sense==6) {if(food_y>snake_y[0])return 1;else if(food_y<snake_y[0]) return 2; else return 0;}
         else return -1;
 	}
 	public int action(int act,int[][] env) {//tested
         if(act == 0) //move to East
-        	if(sensor(0,env)==WALL) {game_restart(env);return 0;}
-            	else {snake_x[0]=snake_x[0]+1;body_move(env);return 1;}
+        	if(sensor(0,env)==WALL) 
+        		{game_restart(env);return 0;}
+            else 
+            {previous_snake_head_x=snake_x[0];snake_x[0]=snake_x[0]+1;body_move(env);return 1;}
         else if(act == 1)//move to West
-        	if(sensor(1,env)==WALL) {game_restart(env);return 0;}
-            	else {snake_x[0]=snake_x[0]-1;body_move(env);return 1;}
+        	if(sensor(1,env)==WALL) 
+        		{game_restart(env);return 0;}
+            else 
+            {previous_snake_head_x=snake_x[0]; snake_x[0]=snake_x[0]-1;body_move(env);return 1;}
         else if(act == 2)//move to South
-        	if(sensor(2,env)==WALL) {game_restart(env);return 0;}
-            	else {snake_y[0]=snake_y[0]-1;body_move(env);return 1;}
+        	if(sensor(2,env)==WALL) 
+        		{game_restart(env);return 0;}
+            else 
+            {previous_snake_head_y=snake_y[0]; snake_y[0]=snake_y[0]-1;body_move(env);return 1;}
         else if(act == 3)//move to North
-        	if(sensor(3,env)==WALL) {game_restart(env);return 0;}
-            	else {snake_y[0]=snake_y[0]+1;body_move(env);return 1;}
+        	if(sensor(3,env)==WALL) 
+        		{game_restart(env);return 0;}
+            else 
+            {previous_snake_head_y=snake_y[0]; snake_y[0]=snake_y[0]+1;body_move(env);return 1;}
         else if(act==4)//eat current food
-        	if(sensor(4,env)!=FOOD) return 0;
-        	else {snake_len++;score++;env[food_x][food_y]=0;initfood(env);return 1;}
+        	if(sensor(4,env)!=FOOD) 
+        		return 0;
+        	else 
+        		{snake_len++;score++;env[food_x][food_y]=0;initfood(env);return 1;}
         else
         	return -1;
             
@@ -99,20 +130,33 @@ public class Robot_snake {
 	
 	public int award(int act, int[][] env) {//no need test
         if(act==0)
-            if (action(act,env)==0) return -100;//died
-            else return 5;//move Easy successfully
+            if (action(act,env)==0) return -5;//died
+            else {//move Easy successfully
+            	if(manhattan())return 5;
+            	else return-5;
+            }
+        
         if(act==1)
-            if (action(act,env)==0) return -100;
-            else return 5;//move West successfully
+            if (action(act,env)==0) return -5;
+            else {//move West successfully
+            	if(manhattan())return 5;
+            	else return-5;
+            }
         if(act==2)
-            if (action(act,env)==0) return -100;
-            else return 5;//move South successfully
+            if (action(act,env)==0) return -5;
+            else {//move South successfully
+            	if(manhattan())return 5;
+            	else return-5;
+            }
         if(act==3)
-            if (action(act,env)==0) return -100;
-            else return 5;//move North successfully
+            if (action(act,env)==0) return -5;
+            else {//move North successfully
+            	if(manhattan())return 5;
+            	else return-5;
+            }
         if(act==4)
         	if (action(act,env)==0) return -5;//eat at empty grid
-            else return 100;//eat successfully
+            else return 5;//eat successfully
         return 0;
        
 	}
@@ -130,11 +174,12 @@ public class Robot_snake {
 		int temp = r.nextInt(100);
 		int choice;
 		if (temp<epsilon*100 || helper_array_all_0(Qtable.get(state))) 
-			choice = r.nextInt(5);
+			{choice = r.nextInt(5);
+			if(choice==-1) System.out.print("xiiiiiiiii");}
 		else {
 			double max=Collections.max(Qtable.get(state));
 			choice=Qtable.get(state).indexOf(max);
-			
+			if(choice==-1) System.out.print("eneneneneneenen");
 		}
 		return choice;
 	}
@@ -146,6 +191,8 @@ public class Robot_snake {
 		state.add(sensor(2,env));
 		state.add(sensor(3,env));
 		state.add(sensor(4,env));
+		state.add(sensor(5,env));
+		state.add(sensor(6,env));
 		return state;
 	}
 	
