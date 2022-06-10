@@ -1,3 +1,4 @@
+package AI;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +18,7 @@ public class Robot_snake {
 	int history_score=0;
 	int previous_snake_head_x;
 	int previous_snake_head_y;
+	boolean live;
 	Random r = new Random();
 	
 	
@@ -53,6 +55,7 @@ public class Robot_snake {
 			break;}}}
 	
 	public void game_restart(int[][] env) {// restart game 
+		live=false;
 		for(int i=0;i<snake_len;i++) {//remove the previous body in the maze
 			if((snake_x[i]==0)&(snake_x[i]==0))
 				System.out.println("body just get longger");
@@ -151,6 +154,7 @@ public class Robot_snake {
 	}
 	//to adjust if a arraylist all 0, if so return true
 	public boolean helper_array_all_0(ArrayList<Double> list) {
+		live=true;
 		int count=0;
 		for(int i=0;i<list.size();i++)
 			
