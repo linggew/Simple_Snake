@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
-
+// using qlearning global sensor to train AI play snake
 public class Qtable {
 	static int episodes = 10000000;
 	static double learning_rate = 0.3;
