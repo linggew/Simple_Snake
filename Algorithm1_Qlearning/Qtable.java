@@ -89,7 +89,7 @@ public class Qtable {
 				robot.history_score=0;
 			}
 		}
-		exportData(score_plot,"Plot1");
+		exportData(score_plot,"Plot1");// draw the rewards plot
 //		for (ArrayList<Integer> i : Qtable.keySet()) 
 //      System.out.println("key: " + i + " value: " + Qtable.get(i));
 
