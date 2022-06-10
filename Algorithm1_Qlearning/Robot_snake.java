@@ -1,3 +1,5 @@
+package AI;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -93,8 +95,10 @@ public class Robot_snake {
         else if (sense==2) return env[snake_x[0]][snake_y[0]-1];//South
         else if (sense==3) return env[snake_x[0]][snake_y[0]+1];//North
         else if (sense==4) return env[snake_x[0]][snake_y[0]];//current
-        else if (sense==5) {if(food_x>snake_x[0])return 1;else if(food_x<snake_x[0]) return 2; else return 0;}
-        else if (sense==6) {if(food_y>snake_y[0])return 1;else if(food_y<snake_y[0]) return 2; else return 0;}
+        else if (sense==5) return snake_x[0]+snake_y[0]*10;
+        else if (sense==6) return food_x+food_y*10;
+//        else if (sense==5) {if(food_x>snake_x[0])return 1;else if(food_x<snake_x[0]) return 2; else return 0;}
+//        else if (sense==6) {if(food_y>snake_y[0])return 1;else if(food_y<snake_y[0]) return 2; else return 0;}
         else return -1;
 	}
 	public int action(int act,int[][] env) {//tested
