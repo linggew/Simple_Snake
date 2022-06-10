@@ -1,3 +1,5 @@
+package AI;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -7,11 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Qtable {
-	static int episodes = 5000000;
+	static int episodes = 3000000;
 	static double learning_rate = 0.3;
 	static double gamma = 0.9;
 	static double epsilon_Greedy = 0.3;
-	static int []score_plot=new int [501];
+	static int []score_plot=new int [301];
 	static int point=0;
 	static int history_highest_score=0;
 	static HashMap<ArrayList<Integer>,ArrayList<Double>> Qtable=new HashMap <ArrayList<Integer>,ArrayList<Double>>();
@@ -53,6 +55,8 @@ public class Qtable {
 		//ArrayList<Double> zero_list = new ArrayList<Double>() {{add((double) 0);add((double) 0);add((double) 0);add((double) 0);add((double) 0);}};
 		Robot_snake robot = new Robot_snake(world);
 		for(int time=0; time<episodes+1;time++) {
+			robot.live=true;
+			while(robot.live) {
 				ArrayList<Integer> current_state=robot.state(world);
 				boolean contains = Qtable.containsKey(current_state);
 				if(!contains) {
@@ -77,20 +81,21 @@ public class Qtable {
 				Qtable_current_state_actions.set(act,Qtable_current_action_updated);
 				Qtable.put(current_state,Qtable_current_state_actions);
 //*******************************************************************************************************	
-				if(time%10000==0) {
-					if(epsilon_Greedy>0) epsilon_Greedy=epsilon_Greedy-0.001;
-					score_plot[point]=robot.history_score;
-					point=point+1;
-					if(robot.history_score>history_highest_score) history_highest_score=robot.history_score;
-					robot.history_score=0;
+
 				}
+			if(time%10000==0) {
+				if(epsilon_Greedy>0) epsilon_Greedy=epsilon_Greedy-0.001;
+				score_plot[point]=robot.history_score;
+				point=point+1;
+				if(robot.history_score>history_highest_score) history_highest_score=robot.history_score;
+				robot.history_score=0;
 			}
-		exportData(score_plot,"Plot");
+		}
+		exportData(score_plot,"Plot1");
 //		for (ArrayList<Integer> i : Qtable.keySet()) 
 //      System.out.println("key: " + i + " value: " + Qtable.get(i));
 
 		System.out.println("\nthe highest score is"+history_highest_score);
-		System.out.println("\nuse google sheet to draw the plot with Plot.txt doc");
 //	
 	}
 //	
