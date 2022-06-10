@@ -8,9 +8,9 @@ import java.util.Map;
 
 public class Qtable {
 	static int episodes = 5000000;
-	static double learning_rate = 0.2;
-	static double gamma = 0.8;
-	static double epsilon_Greedy = 0.2;
+	static double learning_rate = 0.3;
+	static double gamma = 0.9;
+	static double epsilon_Greedy = 0.3;
 	static int []score_plot=new int [501];
 	static int point=0;
 	static int history_highest_score=0;
