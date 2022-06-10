@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Qtable {
-	static int episodes = 3000000;
+	static int episodes = 10000000;
 	static double learning_rate = 0.3;
 	static double gamma = 0.9;
 	static double epsilon_Greedy = 0.3;
-	static int []score_plot=new int [301];
+	static int []score_plot=new int [1001];
 	static int point=0;
 	static int history_highest_score=0;
 	static HashMap<ArrayList<Integer>,ArrayList<Double>> Qtable=new HashMap <ArrayList<Integer>,ArrayList<Double>>();
